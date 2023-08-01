@@ -1,0 +1,16 @@
+---
+services:
+  app:
+    build: ./app # Собираем образ и директории app/
+    networks:
+      - virt_net # Объявляем что приложения будут в одной виртуальной сети
+  db:
+    image: alpine:latest # Берём готовый образ из Docker Hub
+    networks:
+      - virt_net
+    command: 
+      - /bin/sh
+      - -c
+      - "while true; do nc -lp 6200; done"
+networks:
+  virt_net: # 'Создаём' виртуальную сеть
